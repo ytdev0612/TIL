@@ -15,7 +15,7 @@ def player1_turn():     # 첫번째 플레이어 선택
             if x not in range(1, 10):
                 print('숫자를 잘못 입력하셨습니다.')
             else:                                           # 1~9 위치에서 골랐을 때
-                if board[x-1] == ['●', '○']:  # 이미 누군가 둔 위치면 입력 불가
+                if board[x-1] in ['●', '○']:  # 이미 누군가 둔 위치면 입력 불가
                     print('이미 입력되어 있는 위치 입니다.')
                 else:
                     board[x-1] = '●'
@@ -30,7 +30,7 @@ def player2_turn():
             if x not in range(1, 10):
                 print('숫자를 잘못 입력하셨습니다.')
             else:  # 1~9 위치에서 골랐을 때
-                if board[x - 1] == ['●', '○']:  # 이미 누군가 둔 위치면 입력 불가
+                if board[x - 1] in ['●', '○']:  # 이미 누군가 둔 위치면 입력 불가
                     print('이미 입력되어 있는 위치 입니다.')
                 else:
                     board[x - 1] = '○'
