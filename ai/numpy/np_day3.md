@@ -1127,6 +1127,15 @@ arr2 = np.arange(10,160,10).reshape(3,5)
 arr2
 arr3 = np.tile(np.vstack([arr1, arr2]), (2,1))
 arr3
+
+arr1 = np.hstack([np.zeros(3), np.ones(2)]) + np.array([0,0,0]).reshape(3,1)
+arr2 = np.arange(10, 160, 10).reshape(3,5)
+arr3 = np.vstack([arr1,arr2])
+np.vstack([arr3,arr3])
+
+arr = np.hstack([np.zeros([3,3]), np.ones([3,2])])
+arr2 = np.arange(10, 160, 10).reshape(3,5)
+np.vstack([arr, arr2, arr, arr2])
 ```
 
 ```py
