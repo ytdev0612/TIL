@@ -6607,7 +6607,7 @@ titanic.alive.value_counts()
 ```python
 # 3.타이타닉호 승객의 평균 나이를 구하라.
 titanic['age'].mean()
-# titanic.age.mean()
+# round(titanic.age.mean(), 1)
 ```
 
 
@@ -6620,8 +6620,9 @@ titanic['age'].mean()
 
 ```python
 # 4.타이타닉호 승객중 여성 승객의 평균 나이를 구하라.
-fage = titanic[titanic['sex']=='female']
-fage['age'].mean()
+# fage = titanic[titanic['sex']=='female']
+# fage['age'].mean()
+round(titanic[titanic.sex='female']['age'].mean(),1)
 ```
 
 
@@ -6636,6 +6637,8 @@ fage['age'].mean()
 # 5.타이타닉호 승객중 1등실 선실의 여성 승객의 평균 나이를 구하라.
 fage2 = fage[fage['class']=='First']
 fage2['age'].mean()
+
+round(titanic[(titanic.sex=="female") & (titanic.pclass==1)]['age'].mean(),1)
 ```
 
 
@@ -6656,6 +6659,11 @@ def d(x):
     else:
         return x['sex']
 titanic['category1'] = titanic.apply(d, axis=1)
+```
+
+
+```python
+titanic.apply(lambda x: x.sex if x.age >= 20 else 'child', axis=1)
 ```
 
 
@@ -6924,6 +6932,7 @@ titanic
 # 7.타이타닉호의 승객 중 나이를 명시하지 않은 고객은 나이를 명시한 고객의 평균 나이 값이 되도록 titanic 데이터프레임을 고쳐라.
 titanic['age'] = titanic.age.fillna(titanic.age.mean())
 titanic
+# titanic.fillna({'age':titanic.age.mean()}, inplace=True)
 ```
 
 
@@ -7184,6 +7193,184 @@ titanic
 
 
 ```python
+# titanic.age.isnull().sum()
+# len(titanic.age)
+titanic.age[titanic.age.isnull()] = titanic.age.mean()
+```
+
+
+```python
+col  = ['col1','col2','col3','col4','col5']
+row  = ['row1','row2','row3','row4','row5']
+na = np.nan
+data = [[na, 2,na, 4,na],
+        [ 6, 7,na, 9,na],
+        [11,na,na,14,15],
+        [na,17,na,na,20],
+        [na,22,na,na,25]]
+df = pd.DataFrame(data,row,col)
+df
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>col1</th>
+      <th>col2</th>
+      <th>col3</th>
+      <th>col4</th>
+      <th>col5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>row1</th>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>row2</th>
+      <td>6.0</td>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>9.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>row3</th>
+      <td>11.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>row4</th>
+      <td>NaN</td>
+      <td>17.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>row5</th>
+      <td>NaN</td>
+      <td>22.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>25.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+# df.fillna('a')
+df['col1'].fillna('a')
+df.fillna({'col1':'a', 'col3':'b'})
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>col1</th>
+      <th>col2</th>
+      <th>col3</th>
+      <th>col4</th>
+      <th>col5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>row1</th>
+      <td>a</td>
+      <td>2.0</td>
+      <td>b</td>
+      <td>4.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>row2</th>
+      <td>6.0</td>
+      <td>7.0</td>
+      <td>b</td>
+      <td>9.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>row3</th>
+      <td>11.0</td>
+      <td>NaN</td>
+      <td>b</td>
+      <td>14.0</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>row4</th>
+      <td>a</td>
+      <td>17.0</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>row5</th>
+      <td>a</td>
+      <td>22.0</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>25.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
 # 8. 타이타닉호의 승객에 대해 나이와 성별에 의한 카테고리 열인 category2 열을 만들어라. category2 카테고리는 다음과 같이 정의된다.
 # - 성별을 나타내는 문자열 male 또는 female로 시작한다.
 # - 성별을 나타내는 문자열 뒤에 나이를 나타내는 문자열이 온다.
@@ -7210,6 +7397,11 @@ titanic.apply(d, axis=1)
     Length: 891, dtype: object
 
 
+
+
+```python
+titanic['category2'] = titanic.sex + titanic.age.astype('int').astype('str')
+```
 
 
 ```python
@@ -7493,6 +7685,19 @@ titanic
 </div>
 
 
+
+
+```python
+bins = [1, 20, 30, 50, 70, 100]
+labels = ["미성년자", "청년", "중년", "장년", "노년"]
+titanic['연령대'] = pd.cut(age, bins, labels=labels
+titanic.연령대.value_counts()
+```
+
+
+```python
+pd.DataFrame(titanic.연령대.value_counts())
+```
 
 
 ```python
@@ -7787,6 +7992,28 @@ titanic
 </div>
 
 
+
+
+```python
+bins = [0,20,30,50,70,100]
+labels = ["미성년자", "청년", "중년", "장년", "노년"]
+```
+
+
+```python
+titanic['age_label'] = pd.cut(titanic.age, bins, labels).astype(str)
+titanic
+```
+
+
+```python
+titanic['성별']=titanic.apply(lambda x:'남성' if x.sex=='male' else '여성',axis=1)
+```
+
+
+```python
+titanic['category3_1']=titanic.apply(lambda x: '미성년자' if x.age <20 else x.age_label+x.성별,axis=1)
+```
 
 
 ```python
