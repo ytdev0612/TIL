@@ -27,3 +27,8 @@ plt.title('THe Elbow Curve')
 plt.xlabel('Number of Clusters')
 plt.ylabel("WCSS") #WCSS stands for total within-cluster sum of sqaure
 plt.show()
+
+plt.figure(figsize=(12,7))
+axis = sns.barplot(x=np.arange(0,5,1), y=data.groupby(['cluster']).count()['age'].values)
+x=axis.set_xlabel("cluster Number")
+x=axis.set_ylabel("Number of students")
